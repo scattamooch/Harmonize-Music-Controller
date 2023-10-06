@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -15,6 +16,7 @@ export default class CreateRoomPage extends Component {
   defaultVotes = 2;
   constructor(props) {
     super(props);
+    this.navigate = useNavigate()
     this.state = {
       guestCanPause: true,
       votesToSkip: this.defaultVotes,
@@ -48,7 +50,7 @@ export default class CreateRoomPage extends Component {
     };
     fetch("/api/create-room", requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => this.navigate("/room/" + data.code));
   }
 
   render() {
